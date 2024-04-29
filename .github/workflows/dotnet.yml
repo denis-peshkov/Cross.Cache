@@ -31,6 +31,9 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v2.0.0
 
+    - name: GitTools
+      uses: GitTools/actions@v1.1.1
+
     - name: Restore dependencies
       run: dotnet restore
 
