@@ -21,7 +21,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -31,7 +34,7 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v2.0.0
 
-    - name: Install GitVersion.
+    - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v1.1.1
       with:
         versionSpec: '5.12.0'
