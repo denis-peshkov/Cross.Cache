@@ -9,7 +9,7 @@ branches:
     tracks-release-branches: false
     is-release-branch: false
   release:
-    regex: ^releases?[/-]
+    regex: ^release(s)?[/-]
     mode: ContinuousDelivery
     tag: beta
     increment: Patch
@@ -19,7 +19,7 @@ branches:
     is-release-branch: true
     pre-release-weight: 1000
   feature:
-    regex: ^features?[/-]
+    regex: ^feature(s)?[/-]
     mode: ContinuousDelivery
     tag: useBranchName
     increment: Inherit
