@@ -9,7 +9,7 @@ branches:
       - master
       - develop
       - release
-    prevent-increment-of-merged-branch-version: true
+    prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     tracks-release-branches: true
     is-release-branch: true
@@ -17,10 +17,14 @@ branches:
     regex: ^release(s)?[/-]
     mode: ContinuousDelivery
     tag: preview
-    increment: Patch
-    prevent-increment-of-merged-branch-version: true
+    increment: Inherit
+    source-branches:
+      - master
+      - release
+    tag-number-pattern: '[/-](?<number>\d+)[-/]'
+    prevent-increment-of-merged-branch-version: false
     track-merge-target: false
-    tracks-release-branches: false
+    tracks-release-branches: true
     is-release-branch: true
     pre-release-weight: 1000
   feature:
@@ -35,10 +39,10 @@ branches:
   pull-request:
     regex: ^(pull|pull\-requests|pr|merge)[/-]
     mode: ContinuousDelivery
-    tag: PullRequest
+    tag: pr
     increment: Inherit
-    prevent-increment-of-merged-branch-version: false
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
+    prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     tracks-release-branches: false
     is-release-branch: false
