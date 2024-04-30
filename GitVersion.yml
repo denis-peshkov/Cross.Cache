@@ -41,10 +41,10 @@ branches:
     mode: ContinuousDelivery
     tag: pr
     increment: Inherit
-    prevent-increment-of-merged-branch-version: false
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
+    prevent-increment-of-merged-branch-version: false
     track-merge-target: false
-    tracks-release-branches: false
+    tracks-release-branches: true
     is-release-branch: false
   hotfix:
     regex: ^hotfix(es)?[/-]
