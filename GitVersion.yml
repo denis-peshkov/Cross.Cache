@@ -11,7 +11,7 @@ branches:
       - release
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
     prevent-increment-of-merged-branch-version: false
-    track-merge-target: true
+    track-merge-target: false
     tracks-release-branches: true
     is-release-branch: true
     is-mainline: true
