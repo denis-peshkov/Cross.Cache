@@ -9,7 +9,7 @@ branches:
       - master
       - develop
       - release
-    prevent-increment-of-merged-branch-version: false
+    prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     tracks-release-branches: true
     is-release-branch: true
