@@ -19,14 +19,12 @@ branches:
     tag: preview
     increment: Inherit
     source-branches:
-      - develop
       - master
-      - support
-      - release/*
+      - release
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     tracks-release-branches: false
-    is-release-branch: true
+    is-release-branch: false
     pre-release-weight: 1000
   feature:
     regex: ^feature(s)?[/-]
