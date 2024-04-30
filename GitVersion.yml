@@ -15,7 +15,7 @@ branches:
   release:
     regex: ^release(s)?[/-]
     mode: ContinuousDelivery
-    tag: beta
+    tag: preview
     increment: Patch
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
