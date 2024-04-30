@@ -12,7 +12,7 @@ branches:
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     tracks-release-branches: false
-    is-release-branch: false
+    is-release-branch: true
   release:
     regex: ^release(s)?[/-]
     mode: ContinuousDelivery
