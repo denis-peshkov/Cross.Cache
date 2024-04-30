@@ -13,6 +13,7 @@ branches:
     track-merge-target: true
     tracks-release-branches: true
     is-release-branch: true
+    pre-release-weight: 550
   release:
     regex: ^release(s)?[/-]
     mode: ContinuousDelivery
