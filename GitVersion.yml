@@ -5,6 +5,9 @@ branches:
     mode: ContinuousDelivery
     tag: ''
     increment: Patch
+    source-branches:
+      - develop
+      - release
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     tracks-release-branches: false
@@ -29,7 +32,7 @@ branches:
     tracks-release-branches: false
     is-release-branch: false
   pull-request:
-    regex: ^(pull|pull\-requests|pr)[/-]
+    regex: ^(pull|pull\-requests|pr|merge)[/-]
     mode: ContinuousDelivery
     tag: PullRequest
     increment: Inherit
