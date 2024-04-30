@@ -6,6 +6,7 @@ branches:
     tag: ''
     increment: Minor
     source-branches:
+      - master
       - develop
       - release
     prevent-increment-of-merged-branch-version: true
