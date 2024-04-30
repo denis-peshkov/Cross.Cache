@@ -4,7 +4,7 @@ branches:
     regex: ^master$|^main$
     mode: ContinuousDelivery
     tag: ''
-    increment: Minor
+    increment: Patch
     source-branches:
       - master
       - develop
