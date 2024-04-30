@@ -9,6 +9,7 @@ branches:
       - master
       - develop
       - release
+    tag-number-pattern: '[/-](?<number>\d+)[-/]'
     prevent-increment-of-merged-branch-version: true
     track-merge-target: true
     tracks-release-branches: true
