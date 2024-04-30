@@ -18,7 +18,7 @@ branches:
     mode: ContinuousDelivery
     tag: preview
     increment: Patch
-    prevent-increment-of-merged-branch-version: true
+    prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     tracks-release-branches: false
     is-release-branch: true
