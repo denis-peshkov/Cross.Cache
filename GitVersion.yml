@@ -11,7 +11,7 @@ branches:
       - release
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
-    tracks-release-branches: false
+    tracks-release-branches: true
     is-release-branch: true
   release:
     regex: ^release(s)?[/-]
