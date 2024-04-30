@@ -21,6 +21,7 @@ branches:
     source-branches:
       - master
       - release
+    tag-number-pattern: '[/-](?<number>\d+)[-/]'
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     tracks-release-branches: true
