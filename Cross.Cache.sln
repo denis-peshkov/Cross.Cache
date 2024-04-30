@@ -10,7 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		ReleaseNotes.txt = ReleaseNotes.txt
 		GitVersion.yml = GitVersion.yml
-		config.nuspec = config.nuspec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cross.Cache", "Cross.Cache\Cross.Cache.csproj", "{EAF0AC39-A26A-4432-8EA0-F1C9C01E3B06}"
