@@ -23,8 +23,8 @@ branches:
       - release
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: false
+    tracks-release-branches: true
+    is-release-branch: true
     pre-release-weight: 1000
   feature:
     regex: ^feature(s)?[/-]
