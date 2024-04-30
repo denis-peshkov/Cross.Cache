@@ -39,7 +39,7 @@ branches:
   pull-request:
     regex: ^(pull|pull\-requests|pr|merge)[/-]
     mode: ContinuousDelivery
-    tag: PullRequest
+    tag: pr
     increment: Inherit
     prevent-increment-of-merged-branch-version: false
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
