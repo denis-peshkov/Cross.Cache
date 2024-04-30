@@ -18,6 +18,11 @@ branches:
     mode: ContinuousDelivery
     tag: preview
     increment: Inherit
+    source-branches:
+      - develop
+      - master
+      - support
+      - release/*
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     tracks-release-branches: false
