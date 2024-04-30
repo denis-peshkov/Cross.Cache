@@ -4,7 +4,7 @@ branches:
     regex: ^master$|^main$
     mode: ContinuousDelivery
     tag: ''
-    increment: Inherit
+    increment: Patch
     source-branches:
       - master
       - develop
@@ -13,6 +13,8 @@ branches:
     track-merge-target: false
     tracks-release-branches: true
     is-release-branch: true
+    is-mainline: true
+    pre-release-weight: null
   release:
     regex: ^release(s)?[/-]
     mode: ContinuousDelivery
