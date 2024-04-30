@@ -9,13 +9,12 @@ branches:
       - master
       - develop
       - release
-    tag-number-pattern: '[/-]\d+(?=\D*$)[-/]'
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     tracks-release-branches: true
     is-release-branch: true
     is-mainline: true
-    pre-release-weight: 550
+    pre-release-weight: null
   release:
     regex: ^release(s)?[/-]
     mode: ContinuousDelivery
