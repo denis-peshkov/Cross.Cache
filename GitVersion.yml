@@ -6,14 +6,14 @@ branches:
     tag: ''
     increment: Patch
     source-branches:
-      - develop
+      - master
+      - feature
       - release
-    prevent-increment-of-merged-branch-version: false
-    track-merge-target: false
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: true
     tracks-release-branches: true
-    is-release-branch: false
-    is-mainline: true
-    pre-release-weight: 0
+    is-release-branch: true
+    pre-release-weight: null
   release:
     regex: ^release(s)?[/-]
     mode: ContinuousDelivery
@@ -26,9 +26,8 @@ branches:
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: true
-    is-mainline: false
+    tracks-release-branches: true
+    is-release-branch: false
     pre-release-weight: 30000
   feature:
     regex: ^feature(s)?[/-]
@@ -75,5 +74,4 @@ branches:
     track-merge-target: true
     tracks-release-branches: true
     is-release-branch: false
-    is-mainline: false
     pre-release-weight: 0
