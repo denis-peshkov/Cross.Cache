@@ -6,7 +6,6 @@ branches:
     tag: ''
     increment: Patch
     source-branches:
-      - master
       - feature
       - release
     prevent-increment-of-merged-branch-version: true
