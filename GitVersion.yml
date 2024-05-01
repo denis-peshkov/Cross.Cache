@@ -13,7 +13,7 @@ branches:
     track-merge-target: true
     tracks-release-branches: true
     is-release-branch: true
-    pre-release-weight: null
+    pre-release-weight: 0
   release:
     regex: ^release(s)?[/-]
     mode: ContinuousDelivery
@@ -21,13 +21,12 @@ branches:
     increment: Inherit
     source-branches:
       - master
-      - develop
       - release
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
     prevent-increment-of-merged-branch-version: false
     track-merge-target: true
     tracks-release-branches: true
-    is-release-branch: false
+    is-release-branch: true
     pre-release-weight: 30000
   feature:
     regex: ^feature(s)?[/-]
