@@ -25,7 +25,7 @@ branches:
       - release
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
     prevent-increment-of-merged-branch-version: false
-    track-merge-target: false
+    track-merge-target: true
     tracks-release-branches: true
     is-release-branch: false
     pre-release-weight: 30000
