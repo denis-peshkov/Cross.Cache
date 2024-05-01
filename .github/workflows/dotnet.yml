@@ -60,7 +60,7 @@ jobs:
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG --no-restore
 
     - name: Nuget Pack
-      run: nuget pack _nuget/config.nuspec -Symbols -Version env:semVer
+      run: nuget pack _nuget/config.nuspec -Symbols -Version $env:semVer
 
     - name: Test
       run: dotnet test --no-build --verbosity normal
