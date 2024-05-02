@@ -72,12 +72,12 @@ jobs:
         git tag v${{ env.semVer }}
 #    - name: Push git tag
 #      run: git push origin v${{ env.semVer }}
-    - name: Commit report
+    - name: Push git tag
       run: |
         git config --global user.name 'Denis Peshkov'
         git config --global user.email 'denis.peshkov@outlook.com'
         git remote set-url origin https://x-access-token:${{ secrets.TAGTOKEN }}@github.com/${{ github.repository }}
-        git push  
+        git push origin v${{ env.semVer }}
 
 #    - name: Tag commit
 #      uses: tvdias/github-tagger@v0.0.2
