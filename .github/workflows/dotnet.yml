@@ -62,16 +62,22 @@ jobs:
     - name: Nuget Pack
       run: nuget pack _nuget/config.nuspec -Symbols -Version ${{env.semVer}}
 
-    - name: Create tag
-      uses: actions/github-script@v5
+    - name: Tag snapshot
+      uses: tvdias/github-tagger@v0.0.1
       with:
-        script: |
-          github.rest.git.createRef({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            ref: 'refs/tags/v${{env.semVer}}',
-            sha: context.sha
-          })  
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        tag: v${{env.semVer}}
+
+#    - name: Create tag
+#      uses: actions/github-script@v5
+#      with:
+#        script: |
+#          github.rest.git.createRef({
+#            owner: context.repo.owner,
+#            repo: context.repo.repo,
+#            ref: 'refs/tags/v${{env.semVer}}',
+#            sha: context.sha
+#          })
 
     - name: Test
       run: dotnet test --no-build --verbosity normal
