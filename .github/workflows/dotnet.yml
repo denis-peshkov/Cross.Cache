@@ -76,7 +76,7 @@ jobs:
       run: |
         git config --global user.name 'Denis Peshkov'
         git config --global user.email 'denis.peshkov@outlook.com'
-        git remote set-url origin https://x-access-token:${{ secrets.TagToken }}@github.com/${{ github.repository }}
+        git remote set-url origin https://x-access-token:${{ secrets.TAGTOKEN }}@github.com/${{ github.repository }}
         git push  
 
 #    - name: Tag commit
