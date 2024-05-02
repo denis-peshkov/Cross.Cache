@@ -62,16 +62,22 @@ jobs:
     - name: Nuget Pack
       run: nuget pack _nuget/config.nuspec -Symbols -Version ${{env.semVer}}
 
-    - name: Create Tag
-      uses: rickstaa/action-create-tag@v1.7.2
-      with:
-        tag: v${{ env.semVer }}
+#    - name: Create Tag
+#      uses: rickstaa/action-create-tag@v1.7.2
+#      with:
+#        tag: v${{ env.semVer }}
 
-#    - name: Create git tag
-#      run: |
-#        git tag v${{ env.semVer }}
+    - name: Create git tag
+      run: |
+        git tag v${{ env.semVer }}
 #    - name: Push git tag
 #      run: git push origin v${{ env.semVer }}
+    - name: Commit report
+      run: |
+        git config --global user.name 'Denis Peshkov'
+        git config --global user.email 'denis.peshkov@outlook.com'
+        git remote set-url origin https://x-access-token:${{ secrets.TagToken }}@github.com/${{ github.repository }}
+        git push  
 
 #    - name: Tag commit
 #      uses: tvdias/github-tagger@v0.0.2
