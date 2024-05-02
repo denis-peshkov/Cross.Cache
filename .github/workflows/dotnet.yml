@@ -62,11 +62,11 @@ jobs:
     - name: Nuget Pack
       run: nuget pack _nuget/config.nuspec -Symbols -Version ${{env.semVer}}
 
-    - name: Tag snapshot
+    - name: Tag commit
       uses: tvdias/github-tagger@v0.0.1
       with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        tag: v${{env.semVer}}
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        tag: "v${{ env.semVer }}"
 
 #    - name: Create tag
 #      uses: actions/github-script@v5
