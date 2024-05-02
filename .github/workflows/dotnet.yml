@@ -62,6 +62,17 @@ jobs:
     - name: Nuget Pack
       run: nuget pack _nuget/config.nuspec -Symbols -Version ${{env.semVer}}
 
+    - name: Create tag
+      uses: actions/github-script@v5
+      with:
+        script: |
+          github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: 'refs/tags/v${{env.semVer}}',
+            sha: context.sha
+          })  
+
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
