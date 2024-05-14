@@ -65,7 +65,7 @@ branches:
       - hotfix
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
-    tracks-release-branches: true
+    tracks-release-branches: false
     is-release-branch: false
   dev:
     regex: ^dev(elop)?(ment)?$
