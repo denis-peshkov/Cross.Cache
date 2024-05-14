@@ -70,7 +70,7 @@ public class CacheInMemoryService : ICacheService
 
     /// The method is deliberately left empty
     /// method left to implement ICacheService
-    public Task<byte[]> GetCacheInBytesAsync(string key)
+    public Task<byte[]?> GetCacheInBytesAsync(string key)
         => Task.FromResult(Array.Empty<byte>());
 
     /// The method is deliberately left empty

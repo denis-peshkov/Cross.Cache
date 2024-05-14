@@ -16,7 +16,7 @@ public interface ICacheService
 
     Task<string> GetCacheAsync(string key);
 
-    Task<byte[]> GetCacheInBytesAsync(string key);
+    Task<byte[]?> GetCacheInBytesAsync(string key);
 
     Task SetCacheAsync(string key, string value, bool defaultOptions);
 
