@@ -61,7 +61,7 @@ jobs:
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG --no-restore
 
     - name: Nuget Pack
-      run: nuget pack _nuget/config.nuspec -Symbols -Version ${{env.semVer}}
+      run: nuget pack _nuget/config.nuspec -Symbols -Version ${{ env.semVer }}
 
 #    - name: Create Tag
 #      uses: rickstaa/action-create-tag@v1.7.2
