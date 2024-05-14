@@ -72,15 +72,17 @@ jobs:
       run: echo "github.head_ref 1 ${{ github.head_ref }} 2 $GITHUB_REF 3 ${{ github.ref }}"
 
     - name: Create git tag
-      if: contains(${{ github.ref }}, 'refs/heads/release')
-        || contains(${{ github.ref }}, 'refs/heads/hotfix')
-        || contains(${{ github.ref }}, 'refs/heads/master')
+      if: ${{ 
+        startsWith(github.ref, 'refs/heads/hotfix')
+        || startsWith(github.ref, 'refs/heads/hotfix')
+        || startsWith(github.ref, 'refs/heads/master')
+        }}
       run: |
         git tag v${{ env.semVer }}
       #    - name: Push git tag
       #      run: git push origin v${{ env.semVer }}
     - name: Push git tag
-      if: contains(fromJson('["refs/heads/master", "refs/heads/release", "refs/heads/hotfix"]'), ${{ github.ref }})
+      if: ${{ contains(fromJson('["refs/heads/master", "refs/heads/release", "refs/heads/hotfix"]'), github.ref) }}
       run: |
         git config --global user.name 'Denis Peshkov'
         git config --global user.email 'denis.peshkov@outlook.com'
