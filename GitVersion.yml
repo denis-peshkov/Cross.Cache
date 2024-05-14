@@ -55,7 +55,7 @@ branches:
     mode: ContinuousDelivery
     tag: pr
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
-    increment: Inherit
+    increment: None
     source-branches:
       - dev
       - master
