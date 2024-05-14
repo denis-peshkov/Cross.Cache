@@ -35,7 +35,7 @@ branches:
     tag: preview
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
     increment: Patch
-    source-branches: [ master ]
+    source-branches: [ master, hotfix ]
     prevent-increment-of-merged-branch-version: false
     track-merge-target: true
     tracks-release-branches: true
