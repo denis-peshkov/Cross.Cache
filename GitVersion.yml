@@ -64,7 +64,7 @@ branches:
       - support
       - hotfix
     prevent-increment-of-merged-branch-version: false
-    track-merge-target: false
+    track-merge-target: true
     tracks-release-branches: false
     is-release-branch: false
   dev:
