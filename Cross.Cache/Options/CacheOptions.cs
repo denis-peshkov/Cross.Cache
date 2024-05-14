@@ -12,5 +12,5 @@ public class CacheOptions
 
     public int CacheWarmLatestCount { get; set; }
 
-    public CacheInRedisOptions? CacheInRedisOptions { get; set; }
+    public CacheInRedisOptions? CacheInRedis { get; set; }
 }

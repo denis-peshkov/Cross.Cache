@@ -22,7 +22,7 @@ public class CacheInRedisService : ICacheService
         var poolSize = 30;
         _connectionPool = ConnectionMultiplexerPoolFactory.Create(
             poolSize: poolSize,
-            configuration: CacheOptions.CacheInRedisOptions.ConnectionStringRedis,
+            configuration: CacheOptions.CacheInRedis.ConnectionString,
             connectionSelectionStrategy: ConnectionSelectionStrategy.RoundRobin);
         _connectionsErrorCount = new int[poolSize];
     }
@@ -60,7 +60,7 @@ public class CacheInRedisService : ICacheService
     {
         var count = 0;
 
-        var multiplexer = ConnectionMultiplexer.Connect(CacheOptions.CacheInRedisOptions.ConnectionStringRedis);
+        var multiplexer = ConnectionMultiplexer.Connect(CacheOptions.CacheInRedis.ConnectionString);
 
         foreach (var endPoint in multiplexer.GetEndPoints())
         {
@@ -102,7 +102,7 @@ public class CacheInRedisService : ICacheService
         return res;
     }
 
-    public async Task<byte[]> GetCacheInBytesAsync(string key)
+    public async Task<byte[]?> GetCacheInBytesAsync(string key)
     {
         var database = await QueryRedisAsync(db => Task.FromResult(db));
         var redisValue = await database.StringGetAsync(key);

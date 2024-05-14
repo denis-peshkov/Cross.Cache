@@ -2,7 +2,7 @@
 
 public class CacheInRedisOptions
 {
-    public required string ConnectionStringRedis { get; set; }
+    public required string ConnectionString { get; set; }
 
     // Hour
     public int AbsoluteExpirationRelativeToNow { get; set; }

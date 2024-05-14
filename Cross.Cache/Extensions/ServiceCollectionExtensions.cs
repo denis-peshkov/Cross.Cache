@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
                 services.AddStackExchangeRedisCache(
                     options =>
                     {
-                        options.Configuration = configuration["CacheOptions:CacheInRedisSetting:ConnectionStringRedis"];
+                        options.Configuration = configuration[$"{nameof(CacheOptions)}:CacheInRedis:ConnectionString"];
                         options.ConfigurationOptions = new ConfigurationOptions
                         {
                             AsyncTimeout = 6000,
