@@ -72,11 +72,7 @@ jobs:
       run: echo "github.head_ref 1 ${{ github.head_ref }} 2 $GITHUB_REF 3 ${{ github.ref }}"
 
     - name: Create git tag
-      if: ${{ 
-        startsWith(github.ref, 'refs/heads/hotfix')
-        || startsWith(github.ref, 'refs/heads/hotfix')
-        || startsWith(github.ref, 'refs/heads/master')
-        }}
+      if: ${{ startsWith(github.ref, 'refs/heads/hotfix') || startsWith(github.ref, 'refs/heads/hotfix') || startsWith(github.ref, 'refs/heads/master') }}
       run: |
         git tag v${{ env.semVer }}
       #    - name: Push git tag
