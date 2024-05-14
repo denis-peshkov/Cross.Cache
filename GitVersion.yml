@@ -54,6 +54,7 @@ branches:
     regex: ^(pull|pull\-requests|pr|merge)[/-]
     mode: ContinuousDelivery
     tag: pr
+    tag-number-pattern: '[/-](?<number>\d+)[-/]'
     increment: Inherit
     source-branches:
       - dev
@@ -62,7 +63,6 @@ branches:
       - feature
       - support
       - hotfix
-    tag-number-pattern: '[/-](?<number>\d+)[-/]'
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     tracks-release-branches: false
