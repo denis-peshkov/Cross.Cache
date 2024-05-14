@@ -72,7 +72,8 @@ jobs:
       run: echo "github.head_ref 1 ${{ github.head_ref }} 2 $GITHUB_REF 3 ${{ github.ref }}"
 
     - name: Create git tag
-      if: ${{ contains(github.ref, 'refs/heads/hotfix') || contains(github.ref, 'refs/heads/hotfix') || contains(github.ref, 'refs/heads/master') }}
+      if: ${{ contains('refs/heads/hotfix', github.ref) || contains('refs/heads/hotfix', github.ref) || contains('refs/heads/master', github.ref) }}
+#      if: ${{ contains(fromJson('["refs/heads/master", "refs/heads/release", "refs/heads/hotfix"]'), github.ref) }}
       run: |
         git tag v${{ env.semVer }}
       #    - name: Push git tag
