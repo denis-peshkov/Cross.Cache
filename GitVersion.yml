@@ -19,7 +19,7 @@ branches:
     mode: ContinuousDelivery
     tag: preview
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
-    increment: Inherit
+    increment: Minor
     source-branches:
       - master
       - dev
