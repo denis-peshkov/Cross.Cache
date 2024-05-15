@@ -20,7 +20,7 @@ public class CacheInMemoryService : ICacheService
             ? Task.FromResult(result)
             : Task.FromResult(string.Empty);
 
-    public Task SetCacheAsync(string key, string value, bool defaultOptions)
+    public Task SetCacheAsync(string key, string value)
     {
         if (_cacheInMemory.ContainsKey(key))
         {
@@ -51,17 +51,18 @@ public class CacheInMemoryService : ICacheService
         return keyCache.ToString();
     }
 
-    public Task RemoveCachesByPatternAsync(string pattern) => throw new NotImplementedException();
+    public Task RemoveCachesByPatternAsync(string pattern)
+        => throw new NotImplementedException();
 
     /// The method is deliberately left empty
     /// method left to implement ICacheService
     public Task RemoveKeyCache(string key)
-        => Task.CompletedTask;
+        => throw new NotImplementedException();
 
     /// The method is deliberately left empty
     /// method left to implement ICacheService
     public Task SetCacheAsync(string key, string value, DistributedCacheEntryOptions options)
-        => Task.CompletedTask;
+        => throw new NotImplementedException();
 
     /// The method is deliberately left empty
     /// method left to implement ICacheService
@@ -69,32 +70,24 @@ public class CacheInMemoryService : ICacheService
         => SetCacheAsync(key, value, TimeSpan.Zero);
 
     public Task SetCacheAsync(string key, byte[] value, TimeSpan expiry)
-        => Task.CompletedTask;
+        => throw new NotImplementedException();
 
     /// The method is deliberately left empty
     /// method left to implement ICacheService
     public Task<byte[]?> GetCacheInBytesAsync(string key)
-        => Task.FromResult(Array.Empty<byte>());
+        => throw new NotImplementedException();
 
     /// The method is deliberately left empty
     /// method left to implement ICacheService
     public Task<bool> KeyExistsAsync(string key)
-    {
-        throw new NotImplementedException();
-    }
+        => throw new NotImplementedException();
 
     public int ABSOLUTE_EXPIRATION_RELATIVE_TO_NOW()
-    {
-        throw new NotImplementedException();
-    }
+        => throw new NotImplementedException();
 
     public Task RemoveCachesByPatternAsync(string pattern, IDatabase? database = null)
-    {
-        throw new NotImplementedException();
-    }
+        => throw new NotImplementedException();
 
     public Task<IDatabase> GetDatabase(int dbIndex = -1)
-    {
-        throw new NotImplementedException();
-    }
+        => throw new NotImplementedException();
 }
