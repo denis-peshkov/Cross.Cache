@@ -86,7 +86,10 @@ jobs:
         git remote set-url origin https://x-access-token:${{ secrets.TAGTOKEN }}@github.com/${{ github.repository }}
         git push origin v${{ env.semVer }}
 
-#    - name: Tag commit
+    - name: Nuget Push
+      run: nuget push **/Cross.Cache.${{ env.semVer }}.symbols.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source "https://api.nuget.org/v3/index.json" -SkipDuplicate
+
+      #    - name: Tag commit
 #      uses: tvdias/github-tagger@v0.0.2
 #      with:
 #        repo-token: "${{ secrets.GITHUB_TOKEN }}"
