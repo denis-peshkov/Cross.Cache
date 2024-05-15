@@ -2,8 +2,6 @@
 
 public interface ICacheService
 {
-    int ABSOLUTE_EXPIRATION_RELATIVE_TO_NOW();
-
     CacheOptions CacheOptions { get; }
 
     int GetCacheCount();
@@ -20,7 +18,7 @@ public interface ICacheService
 
     Task SetCacheAsync(string key, string value);
 
-    Task SetCacheAsync(string key, string value, DistributedCacheEntryOptions options);
+    Task SetCacheAsync(string key, string value, TimeSpan expiry);
 
     Task SetCacheAsync(string key, byte[] value);
 

@@ -61,7 +61,7 @@ public class CacheInMemoryService : ICacheService
 
     /// The method is deliberately left empty
     /// method left to implement ICacheService
-    public Task SetCacheAsync(string key, string value, DistributedCacheEntryOptions options)
+    public Task SetCacheAsync(string key, string value, TimeSpan expiry)
         => throw new NotImplementedException();
 
     /// The method is deliberately left empty
@@ -80,9 +80,6 @@ public class CacheInMemoryService : ICacheService
     /// The method is deliberately left empty
     /// method left to implement ICacheService
     public Task<bool> KeyExistsAsync(string key)
-        => throw new NotImplementedException();
-
-    public int ABSOLUTE_EXPIRATION_RELATIVE_TO_NOW()
         => throw new NotImplementedException();
 
     public Task RemoveCachesByPatternAsync(string pattern, IDatabase? database = null)
