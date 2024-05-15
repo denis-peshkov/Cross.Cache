@@ -122,12 +122,12 @@ public class CacheInRedisService : ICacheService
         ));
     }
 
-    public async Task SetCacheAsync(string key, byte[] value)
+    public async Task SetCacheAsync(string key, byte[] value, DistributedCacheEntryOptions? options = null)
     {
         await QueryRedisAsync(async db => await db.StringSetAsync(
             key,
             value,
-            TimeSpan.FromMinutes(ABSOLUTE_EXPIRATION_RELATIVE_TO_NOW())
+            TimeSpan.FromMinutes(options?.AbsoluteExpiration?.Minute ?? ABSOLUTE_EXPIRATION_RELATIVE_TO_NOW())
         ));
     }
 
