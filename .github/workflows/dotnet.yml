@@ -87,6 +87,7 @@ jobs:
         git push origin v${{ env.semVer }}
 
     - name: Nuget Push
+      if: ${{ ! contains('refs/pull', github.ref) }}
       run: nuget push **/Cross.Cache.${{ env.semVer }}.symbols.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source "https://api.nuget.org/v3/index.json" -SkipDuplicate
 
       #    - name: Tag commit
