@@ -4,25 +4,28 @@ public class CacheInRedisService : ICacheService
 {
     private readonly ILogger<CacheInRedisService> _logger;
 
-    public int ABSOLUTE_EXPIRATION_RELATIVE_TO_NOW() => 1440;
-
-    private const int SLIDING_EXPIRATION = 1440;
+    private const int EXPIRATION_IN_MINUTES = 1440;
 
     public CacheOptions CacheOptions { get; }
 
-    private static IConnectionMultiplexerPool _connectionPool;
+    private readonly IConnectionMultiplexerPool _connectionPool;
 
-    private static int[] _connectionsErrorCount;
+    private readonly int[] _connectionsErrorCount;
 
     public CacheInRedisService(IOptions<CacheOptions> cacheOptions, ILogger<CacheInRedisService> logger)
     {
+        if (string.IsNullOrEmpty(CacheOptions?.CacheInRedis?.ConnectionString))
+        {
+            throw new InvalidOperationException($"Property 'CacheOptions.CacheInRedis.ConnectionString' cannot be null or empty.");
+        }
+
         _logger = logger;
         CacheOptions = cacheOptions.Value;
 
         var poolSize = 30;
         _connectionPool = ConnectionMultiplexerPoolFactory.Create(
             poolSize: poolSize,
-            configuration: CacheOptions.CacheInRedis.ConnectionString,
+            configuration: CacheOptions.CacheInRedis!.ConnectionString,
             connectionSelectionStrategy: ConnectionSelectionStrategy.RoundRobin);
         _connectionsErrorCount = new int[poolSize];
     }
@@ -49,6 +52,7 @@ public class CacheInRedisService : ICacheService
             {
                 throw;
             }
+
             // Decide when to reconnect based on your own custom logic
             _logger.LogInformation($"Re-establishing connection on index '{connection.ConnectionIndex}'");
             await connection.ReconnectAsync();
@@ -58,9 +62,14 @@ public class CacheInRedisService : ICacheService
 
     public int GetCacheCount()
     {
-        var count = 0;
+        if (string.IsNullOrEmpty(CacheOptions?.CacheInRedis?.ConnectionString))
+        {
+            throw new InvalidOperationException("Property 'CacheOptions.CacheInRedis.ConnectionString' cannot be null or empty.");
+        }
 
         var multiplexer = ConnectionMultiplexer.Connect(CacheOptions.CacheInRedis.ConnectionString);
+
+        var count = 0;
 
         foreach (var endPoint in multiplexer.GetEndPoints())
         {
@@ -81,9 +90,10 @@ public class CacheInRedisService : ICacheService
     {
         if (string.IsNullOrEmpty(pattern))
         {
-            throw new InvalidOperationException("Value cannot be null or empty.");
+            throw new InvalidOperationException($"Value {nameof(pattern)} cannot be null or empty.");
         }
-        database ??= await QueryRedisAsync(db => Task.FromResult(db));
+
+        database ??= await QueryRedisAsync(Task.FromResult);
         var keyList = await GetKeysByPatternAsync(pattern, database);
 
         var deleteTasks = keyList.Select(key => database.KeyDeleteAsync(key));
@@ -93,51 +103,52 @@ public class CacheInRedisService : ICacheService
 
     public async Task<string> GetCacheAsync(string key)
     {
-        var database = await QueryRedisAsync(db => Task.FromResult(db));
+        var database = await QueryRedisAsync(Task.FromResult);
         var redisValue = await database.StringGetAsync(key);
         var res = redisValue.HasValue
             ? redisValue.ToString()
-            : null;
+            : string.Empty;
 
         return res;
     }
 
     public async Task<byte[]?> GetCacheInBytesAsync(string key)
     {
-        var database = await QueryRedisAsync(db => Task.FromResult(db));
+        var database = await QueryRedisAsync(Task.FromResult);
         var redisValue = await database.StringGetAsync(key);
         var res = redisValue.HasValue
-            ? (byte[])redisValue
+            ? (byte[]?)redisValue
             : null;
 
         return res;
     }
 
-    public async Task SetCacheAsync(string key, string value, bool defaultOptions)
+    public async Task SetCacheAsync(string key, string value)
+    {
+        await SetCacheAsync(key, value, TimeSpan.FromMinutes(EXPIRATION_IN_MINUTES));
+    }
+
+    public async Task SetCacheAsync(string key, string value, TimeSpan expiry)
     {
         await QueryRedisAsync(async db => await db.StringSetAsync(
             key,
             value,
-            TimeSpan.FromMinutes(ABSOLUTE_EXPIRATION_RELATIVE_TO_NOW())
+            expiry
         ));
     }
 
-    public async Task SetCacheAsync(string key, byte[] value)
+    public Task SetCacheAsync(string key, byte[] value)
     {
-        await QueryRedisAsync(async db => await db.StringSetAsync(
-            key,
-            value,
-            TimeSpan.FromMinutes(ABSOLUTE_EXPIRATION_RELATIVE_TO_NOW())
-        ));
+        return SetCacheAsync(key, value, TimeSpan.FromMinutes(EXPIRATION_IN_MINUTES));
     }
 
-    public async Task SetCacheAsync(string key, string value, DistributedCacheEntryOptions options)
+    public async Task SetCacheAsync(string key, byte[] value, TimeSpan expiry)
     {
         await QueryRedisAsync(async db => await db.StringSetAsync(
             key,
             value,
-            TimeSpan.FromMinutes(options.AbsoluteExpiration?.Minute ?? ABSOLUTE_EXPIRATION_RELATIVE_TO_NOW())
-            ));
+            expiry
+        ));
     }
 
     public bool CheckCacheFull(int maxCacheSize)
@@ -162,7 +173,7 @@ public class CacheInRedisService : ICacheService
     {
         if (string.IsNullOrEmpty(pattern))
         {
-            throw new InvalidOperationException("Value cannot be null or empty.");
+            throw new InvalidOperationException($"Value {nameof(pattern)} cannot be null or empty.");
         }
 
         var result = new List<string>();
@@ -170,10 +181,13 @@ public class CacheInRedisService : ICacheService
         do
         {
             var batchResult = await database.ExecuteAsync("SCAN", cursor.ToString(), "MATCH", pattern);
-            var innerResult = (RedisResult[])batchResult;
-            cursor = long.Parse((string)innerResult[0]);
-            var redisKeys = (RedisKey[])innerResult[1];
-            result.AddRange(redisKeys.Select(key => key.ToString()));
+            var innerResult = (RedisResult[]?)batchResult;
+            cursor = long.Parse(((string)innerResult![0])!);
+            var redisKeys = (RedisKey[]?)innerResult[1];
+            if (redisKeys != null)
+            {
+                result.AddRange(redisKeys.Select(key => key.ToString()));
+            }
         } while (cursor != 0);
 
         return result;
@@ -186,6 +200,6 @@ public class CacheInRedisService : ICacheService
 
     public async Task<IDatabase> GetDatabase(int dbIndex = -1)
     {
-        return await QueryRedisAsync(db => Task.FromResult(db), dbIndex);
+        return await QueryRedisAsync(Task.FromResult, dbIndex);
     }
 }
