@@ -65,7 +65,10 @@ public class CacheInMemoryService : ICacheService
 
     /// The method is deliberately left empty
     /// method left to implement ICacheService
-    public Task SetCacheAsync(string key, byte[] value, DistributedCacheEntryOptions? options = null)
+    public Task SetCacheAsync(string key, byte[] value)
+        => SetCacheAsync(key, value, TimeSpan.Zero);
+
+    public Task SetCacheAsync(string key, byte[] value, TimeSpan expiry)
         => Task.CompletedTask;
 
     /// The method is deliberately left empty

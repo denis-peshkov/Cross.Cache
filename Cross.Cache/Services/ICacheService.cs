@@ -22,7 +22,9 @@ public interface ICacheService
 
     Task SetCacheAsync(string key, string value, DistributedCacheEntryOptions options);
 
-    Task SetCacheAsync(string key, byte[] value, DistributedCacheEntryOptions? options = null);
+    Task SetCacheAsync(string key, byte[] value);
+
+    Task SetCacheAsync(string key, byte[] value, TimeSpan expiry);
 
     string BuildCacheKey(string typeName, string key);
 
