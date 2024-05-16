@@ -14,13 +14,13 @@ public class CacheInRedisService : ICacheService
 
     public CacheInRedisService(IOptions<CacheOptions> cacheOptions, ILogger<CacheInRedisService> logger)
     {
+        CacheOptions = cacheOptions.Value;
+        _logger = logger;
+
         if (string.IsNullOrEmpty(CacheOptions?.CacheInRedis?.ConnectionString))
         {
             throw new InvalidOperationException($"Property 'CacheOptions.CacheInRedis.ConnectionString' cannot be null or empty.");
         }
-
-        _logger = logger;
-        CacheOptions = cacheOptions.Value;
 
         var poolSize = 30;
         _connectionPool = ConnectionMultiplexerPoolFactory.Create(
