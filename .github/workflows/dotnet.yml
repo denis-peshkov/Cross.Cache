@@ -51,33 +51,23 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: Restore dependencies with NuGet
-      run: nuget restore $SOLUTION
-
-    - name: Build
-      run: dotnet build --no-restore
-
-    - name: Build 2
+    - name: Build solution
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG --no-restore
+
+    - name: Run tests
+      run: dotnet test /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
 
     - name: Nuget Pack
       run: nuget pack _nuget/config.nuspec -Symbols -Version ${{ env.semVer }}
-
-#    - name: Create Tag
-#      uses: rickstaa/action-create-tag@v1.7.2
-#      with:
-#        tag: v${{ env.semVer }}
 
     - name: ref
       run: echo "github.head_ref 1 ${{ github.head_ref }} 2 $GITHUB_REF 3 ${{ github.ref }}"
 
     - name: Create git tag
       if: ${{ contains('refs/heads/hotfix', github.ref) || contains('refs/heads/hotfix', github.ref) || contains('refs/heads/master', github.ref) }}
-#      if: ${{ contains(fromJson('["refs/heads/master", "refs/heads/release", "refs/heads/hotfix"]'), github.ref) }}
       run: |
         git tag v${{ env.semVer }}
-      #    - name: Push git tag
-      #      run: git push origin v${{ env.semVer }}
+
     - name: Push git tag
       if: ${{ contains(fromJson('["refs/heads/master", "refs/heads/release", "refs/heads/hotfix"]'), github.ref) }}
       run: |
@@ -89,26 +79,3 @@ jobs:
     - name: Nuget Push
       if: ${{ !startsWith(github.ref, 'refs/pull') }}
       run: nuget push **/Cross.Cache.${{ env.semVer }}.symbols.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source "https://api.nuget.org/v3/index.json" -SkipDuplicate
-
-      #    - name: Tag commit
-#      uses: tvdias/github-tagger@v0.0.2
-#      with:
-#        repo-token: "${{ secrets.GITHUB_TOKEN }}"
-#        tag: "v${{ env.semVer }}"
-
-#    - name: Create tag
-#      uses: actions/github-script@v5
-#      with:
-#        script: |
-#          github.rest.git.createRef({
-#            owner: context.repo.owner,
-#            repo: context.repo.repo,
-#            ref: 'refs/tags/v${{env.semVer}}',
-#            sha: context.sha
-#          })
-
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-
-    - name: Run tests
-      run: dotnet test /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
