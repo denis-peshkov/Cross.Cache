@@ -20,6 +20,9 @@ public class CacheInMemoryService : ICacheService
             ? Task.FromResult(result)
             : Task.FromResult(string.Empty);
 
+    public Task<T?> GetValueAsync<T>(string key)
+        => throw new NotImplementedException();
+
     public Task SetCacheAsync(string key, string value)
     {
         if (_cacheInMemory.ContainsKey(key))
