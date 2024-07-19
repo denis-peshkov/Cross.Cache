@@ -111,6 +111,18 @@ public class CacheInRedisService : ICacheService
 
         return res;
     }
+    
+    public async Task<T?> GetValueAsync<T>(string key)
+    {
+        var database = await QueryRedisAsync(Task.FromResult);
+        var redisValue = await database.StringGetAsync(key);
+        var redisString = redisValue.HasValue
+            ? redisValue.ToString()
+            : null;
+
+        var result = CacheValueConverterHelper.GetConvertedValue<T>(redisString!);
+        return result;
+    }
 
     public async Task<byte[]?> GetCacheInBytesAsync(string key)
     {

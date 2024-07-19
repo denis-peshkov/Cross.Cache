@@ -20,6 +20,9 @@ public class CacheInMemoryService : ICacheService
             ? Task.FromResult(result)
             : Task.FromResult(string.Empty);
 
+    public Task<T?> GetValueAsync<T>(string key)
+        => throw new NotImplementedException();
+
     public Task SetCacheAsync(string key, string value)
     {
         if (_cacheInMemory.ContainsKey(key))
@@ -53,32 +56,22 @@ public class CacheInMemoryService : ICacheService
 
     public Task RemoveCachesByPatternAsync(string pattern)
         => throw new NotImplementedException();
-
-    /// The method is deliberately left empty
-    /// method left to implement ICacheService
+    
     public Task RemoveKeyCache(string key)
         => throw new NotImplementedException();
-
-    /// The method is deliberately left empty
-    /// method left to implement ICacheService
+    
     public Task SetCacheAsync(string key, string value, TimeSpan expiry)
         => throw new NotImplementedException();
-
-    /// The method is deliberately left empty
-    /// method left to implement ICacheService
+    
     public Task SetCacheAsync(string key, byte[] value)
         => SetCacheAsync(key, value, TimeSpan.Zero);
 
     public Task SetCacheAsync(string key, byte[] value, TimeSpan expiry)
         => throw new NotImplementedException();
-
-    /// The method is deliberately left empty
-    /// method left to implement ICacheService
+    
     public Task<byte[]?> GetCacheInBytesAsync(string key)
         => throw new NotImplementedException();
-
-    /// The method is deliberately left empty
-    /// method left to implement ICacheService
+    
     public Task<bool> KeyExistsAsync(string key)
         => throw new NotImplementedException();
 
