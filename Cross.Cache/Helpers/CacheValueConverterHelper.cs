@@ -21,40 +21,6 @@ public static class CacheValueConverterHelper
     
     private static object? Convert(Type type, string value)
     {
-        // Локальная фукнция для проверки является ли JSON объектом строка value
-        bool IsValidJson(string jsonString)
-        {
-            try
-            {
-                if (jsonString.StartsWith('{') && jsonString.EndsWith('}'))
-                {
-                    var jsonParsed = JsonValue.Parse(jsonString);
-                    if (jsonParsed != null)
-                    {
-                        return true;
-                    }
-                }
-                else if (jsonString.StartsWith('[') && jsonString.EndsWith(']'))
-                {
-                    var jsonParsed = JsonValue.Parse(jsonString);
-                    if (jsonParsed != null)
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-
-            return false;
-        }
-        
         if (type == typeof(object))
         {
             return value;
@@ -63,16 +29,15 @@ public static class CacheValueConverterHelper
         bool isJsonObject = IsValidJson(value);
         bool isCollection = type.Name != nameof(String) && type.GetInterface(nameof(IEnumerable)) != null;
         
-        // Создание конвертера для конвертации не JSON объектов
+        // Create converter to convert non JSON objects
         TypeConverter converter = TypeDescriptor.GetConverter(type);
         object? result = null;
 
         try
         {
-            // Особая логика проверки если вычитываем коллекцию, если коллекция пустая - вернем null
+            // Process collections
             if (isCollection)
             {
-                // Конверсия для других типов коллекций
                 if (isJsonObject)
                 {
                     result = JsonSerializer.Deserialize(value, type);
@@ -85,6 +50,7 @@ public static class CacheValueConverterHelper
                     }
                 }
 
+                // Special collection handling logic, if the collection is empty - return null
                 if (result is ICollection { Count: > 0 } collectionResult)
                 {
                     return collectionResult;
@@ -93,7 +59,7 @@ public static class CacheValueConverterHelper
                 return null;
             }
 
-            // Конверсия в одиночные объекты или системные типы данных
+            // Process regular class objects or System types
             if (isJsonObject)
             {
                 result = JsonSerializer.Deserialize(value, type);
@@ -112,5 +78,38 @@ public static class CacheValueConverterHelper
         {
             return null;
         }
+    }
+    
+    private static bool IsValidJson(string jsonString)
+    {
+        try
+        {
+            if (jsonString.StartsWith('{') && jsonString.EndsWith('}'))
+            {
+                var jsonParsed = JsonValue.Parse(jsonString);
+                if (jsonParsed != null)
+                {
+                    return true;
+                }
+            }
+            else if (jsonString.StartsWith('[') && jsonString.EndsWith(']'))
+            {
+                var jsonParsed = JsonValue.Parse(jsonString);
+                if (jsonParsed != null)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch
+        {
+            return false;
+        }
+
+        return false;
     }
 }

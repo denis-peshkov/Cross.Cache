@@ -1,6 +1,6 @@
 namespace Cross.Cache.UnitTests;
 
-public static class TestCaseSourceHelper
+public static class TestCaseSources
 {
     public static IEnumerable<TestDataWrapper<string, Dictionary<string, SampleTestDto>>> DictionaryCases()
     {
@@ -132,19 +132,4 @@ public static class TestCaseSourceHelper
             Expected = new HashSet<SampleTestDto>(),
         };
     }
-}
-
-public class TestDataWrapper<T, TExp>
-{
-    public T? Value { get; set; }
-    public TExp? Expected { get; set; }
-}
-
-public class SampleTestDto
-{
-    public int Id { get; set; }
-    
-    public string Code { get; set; }
-
-    public string Description { get; set; }
 }

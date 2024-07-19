@@ -4,7 +4,7 @@ namespace Cross.Cache.UnitTests;
 public class CacheValueConverterHelperTests
 {
     [Test(Description = "GetConvertedValue should successfully return Dictionary from string")]
-    [TestCaseSource(typeof(TestCaseSourceHelper), nameof(TestCaseSourceHelper.DictionaryCases))]
+    [TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.DictionaryCases))]
     public void GetConvertedValue_ShouldReturnValueSuccessful_ForDictionary(TestDataWrapper<string, Dictionary<string, SampleTestDto>> data)
     {
         // Act
@@ -16,7 +16,7 @@ public class CacheValueConverterHelperTests
     }
 
     [Test(Description = "GetConvertedValue should successfully return Dto object from string")]
-    [TestCaseSource(typeof(TestCaseSourceHelper), nameof(TestCaseSourceHelper.DtoCases))]
+    [TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.DtoCases))]
     public void GetConvertedValue_ShouldReturnValueSuccessful_ForDto(TestDataWrapper<string, SampleTestDto> data)
     {
         // Act
@@ -27,7 +27,7 @@ public class CacheValueConverterHelperTests
     }
     
     [Test(Description = "GetConvertedValue should successfully return value type object from string")]
-    [TestCaseSource(typeof(TestCaseSourceHelper), nameof(TestCaseSourceHelper.ValueTypeCases))]
+    [TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.ValueTypeCases))]
     public void GetConvertedValue_ShouldReturnValueSuccessful_ForNullableValueType(TestDataWrapper<string, int> data)
     {
         // Act
@@ -38,7 +38,7 @@ public class CacheValueConverterHelperTests
     }
 
     [Test(Description = "GetConvertedValue should successfully return IEnumerable from string")]
-    [TestCaseSource(typeof(TestCaseSourceHelper), nameof(TestCaseSourceHelper.EnumerableTypeCases))]
+    [TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.EnumerableTypeCases))]
     public void GetConvertedValue_ShouldReturnValueSuccessful_ForEnumerable(TestDataWrapper<string, IEnumerable<string>> data)
     {
         // Act
@@ -50,7 +50,7 @@ public class CacheValueConverterHelperTests
     }
 
     [Test(Description = "GetConvertedValue should return Null from empty IEnumerable")]
-    [TestCaseSource(typeof(TestCaseSourceHelper), nameof(TestCaseSourceHelper.EmptyEnumerableCase))]
+    [TestCaseSource(typeof(TestCaseSources), nameof(TestCaseSources.EmptyEnumerableCase))]
     public void GetConvertedValue_ShouldReturnNull_ForEmptyCollection(TestDataWrapper<string, IEnumerable<SampleTestDto>> data)
     {
         // Act
