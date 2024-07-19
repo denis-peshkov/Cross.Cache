@@ -2,21 +2,17 @@ namespace Cross.Cache.Helpers;
 
 public static class CacheValueConverterHelper
 {
-    public static T? GetConvertedValue<T>(string redisValue)
+    public static T? GetConvertedValue<T>(string? redisValue)
     {
-        if (!string.IsNullOrEmpty(redisValue))
-        {
-            var type = typeof(T);
-            var result = Convert(type, redisValue);
-            if (result != null)
-            {
-                return (T?)result;
-            }
-
+        if (string.IsNullOrEmpty(redisValue)) 
             return default;
-        }
-
-        return default;
+        
+        var type = typeof(T);
+        var result = Convert(type, redisValue);
+        
+        return result != null 
+            ? (T?)result
+            : default;
     }
     
     private static object? Convert(Type type, string value)
