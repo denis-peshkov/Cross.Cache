@@ -13,7 +13,7 @@
     <readme>docs\README.md</readme>
     <icon>icon.png</icon>
     <releaseNotes>
-      Initial version.
+      Improvements and new name conventions.
     </releaseNotes>
     <description>Written on C#.</description>
     <tags>NetCore</tags>
