@@ -1,6 +1,6 @@
-﻿namespace Cross.Cache.Services;
+﻿namespace Cross.Cache.Providers;
 
-public interface ICacheService
+public interface ICacheProvider
 {
     CacheOptions CacheOptions { get; }
 

@@ -1,12 +1,12 @@
-﻿namespace Cross.Cache.Services;
+﻿namespace Cross.Cache.Providers;
 
-public class CacheInMemoryService : ICacheService
+public class CacheInMemoryProvider : ICacheProvider
 {
     private readonly ConcurrentDictionary<string, string> _cacheInMemory;
 
     public CacheOptions CacheOptions { get; }
 
-    public CacheInMemoryService(IOptions<CacheOptions> cacheOptions)
+    public CacheInMemoryProvider(IOptions<CacheOptions> cacheOptions)
     {
         _cacheInMemory = new ConcurrentDictionary<string, string>();
         CacheOptions = cacheOptions.Value;
@@ -22,20 +22,6 @@ public class CacheInMemoryService : ICacheService
 
     public Task<T?> GetValueAsync<T>(string key)
         => throw new NotImplementedException();
-
-    public Task SetCacheAsync(string key, string value)
-    {
-        if (_cacheInMemory.ContainsKey(key))
-        {
-            _cacheInMemory[key] = value;
-        }
-        else
-        {
-            _cacheInMemory.TryAdd(key, value);
-        }
-
-        return Task.CompletedTask;
-    }
 
     public int GetCacheCount()
         => _cacheInMemory.Count;
@@ -56,22 +42,36 @@ public class CacheInMemoryService : ICacheService
 
     public Task RemoveCachesByPatternAsync(string pattern)
         => throw new NotImplementedException();
-    
+
     public Task RemoveKeyCache(string key)
         => throw new NotImplementedException();
-    
+
+    public Task SetCacheAsync(string key, string value)
+    {
+        if (_cacheInMemory.ContainsKey(key))
+        {
+            _cacheInMemory[key] = value;
+        }
+        else
+        {
+            _cacheInMemory.TryAdd(key, value);
+        }
+
+        return Task.CompletedTask;
+    }
+
     public Task SetCacheAsync(string key, string value, TimeSpan expiry)
         => throw new NotImplementedException();
-    
+
     public Task SetCacheAsync(string key, byte[] value)
         => SetCacheAsync(key, value, TimeSpan.Zero);
 
     public Task SetCacheAsync(string key, byte[] value, TimeSpan expiry)
         => throw new NotImplementedException();
-    
+
     public Task<byte[]?> GetCacheInBytesAsync(string key)
         => throw new NotImplementedException();
-    
+
     public Task<bool> KeyExistsAsync(string key)
         => throw new NotImplementedException();
 

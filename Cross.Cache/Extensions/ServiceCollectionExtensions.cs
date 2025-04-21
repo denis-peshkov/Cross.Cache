@@ -4,28 +4,29 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddCacheService(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<CacheOptions>(configuration.GetSection(nameof(CacheOptions)));
+        var section = configuration.GetSection(nameof(CacheOptions));
+        services.Configure<CacheOptions>(section);
 
         var useCache = configuration["CacheOptions:UseCache"];
 
         switch (useCache)
         {
             case "InMemory":
-                services.TryAddSingleton<ICacheService, CacheInMemoryService>();
+                services.TryAddSingleton<ICacheProvider, CacheInMemoryProvider>();
                 break;
 
             case "InRedis":
                 services.AddStackExchangeRedisCache(
                     options =>
                     {
-                        options.Configuration = configuration[$"{nameof(CacheOptions)}:CacheInRedis:ConnectionString"];
+                        options.Configuration = section["CacheInRedis:ConnectionString"];
                         options.ConfigurationOptions = new ConfigurationOptions
                         {
                             AsyncTimeout = 6000,
                             SyncTimeout = 6000,
                         };
                     });
-                services.TryAddSingleton<ICacheService, CacheInRedisService>();
+                services.TryAddSingleton<ICacheProvider, CacheInRedisProvider>();
                 break;
 
             default:

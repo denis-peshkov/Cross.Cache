@@ -10,7 +10,7 @@ global using System.Text.Json.Nodes;
 global using System.Threading.Tasks;
 global using Cross.Cache.Helpers;
 global using Cross.Cache.Options;
-global using Cross.Cache.Services;
+global using Cross.Cache.Providers;
 global using Microsoft.Extensions.Caching.Distributed;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;

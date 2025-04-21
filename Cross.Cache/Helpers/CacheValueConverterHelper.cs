@@ -4,91 +4,66 @@ public static class CacheValueConverterHelper
 {
     public static T? GetConvertedValue<T>(string? redisValue)
     {
-        if (string.IsNullOrEmpty(redisValue)) 
+        if (string.IsNullOrEmpty(redisValue))
             return default;
-        
+
         var type = typeof(T);
         var result = Convert(type, redisValue);
-        
-        return result != null 
+
+        return result != null
             ? (T?)result
             : default;
     }
-    
+
     private static object? Convert(Type type, string value)
     {
         if (type == typeof(object))
-        {
             return value;
-        }
-
-        bool isJsonObject = IsValidJson(value);
-        bool isCollection = type.Name != nameof(String) && type.GetInterface(nameof(IEnumerable)) != null;
-        
-        // Create converter to convert non JSON objects
-        TypeConverter converter = TypeDescriptor.GetConverter(type);
-        object? result = null;
 
         try
         {
-            // Process collections
-            if (isCollection)
-            {
-                if (isJsonObject)
-                {
-                    result = JsonSerializer.Deserialize(value, type);
-                }
-                else
-                {
-                    if (converter.CanConvertFrom(typeof(string)))
-                    {
-                        result = converter.ConvertFromInvariantString(value);
-                    }
-                }
-
-                // Special collection handling logic, if the collection is empty - return null
-                if (result is ICollection { Count: > 0 } collectionResult)
-                {
-                    return collectionResult;
-                }
-
-                return null;
-            }
+            var isJson = IsValidJson(value);
+            var isCollection = type != typeof(string) && typeof(IEnumerable).IsAssignableFrom(type);
+            // Create converter to convert non JSON objects
+            var converter = TypeDescriptor.GetConverter(type);
 
             // Process regular class objects or System types
-            if (isJsonObject)
+            if (isJson)
             {
-                result = JsonSerializer.Deserialize(value, type);
-            }
-            else
-            {
-                if (converter.CanConvertFrom(typeof(string)))
-                {
-                    result = converter.ConvertFromInvariantString(value);
-                }
+                var result = JsonSerializer.Deserialize(value, type);
+
+                // Special collection handling logic, if the collection is empty - return null
+                if (isCollection && result is ICollection { Count: 0 })
+                    return null;
+
+                return result;
             }
 
-            return result;
+            if (converter.CanConvertFrom(typeof(string)))
+            {
+                var result = converter.ConvertFromInvariantString(value);
+
+                // Special collection handling logic, if the collection is empty - return null
+                if (isCollection && result is ICollection { Count: 0 })
+                    return null;
+
+                return result;
+            }
+
+            return null;
         }
         catch
         {
             return null;
         }
     }
-    
+
     private static bool IsValidJson(string jsonString)
     {
         try
         {
-            if (jsonString.StartsWith('{') && jsonString.EndsWith('}'))
-            {
-                var jsonParsed = JsonValue.Parse(jsonString);
-                if (jsonParsed != null)
-                {
-                    return true;
-                }
-            }
-            else if (jsonString.StartsWith('[') && jsonString.EndsWith(']'))
+            if ((jsonString.StartsWith('{') && jsonString.EndsWith('}'))
+                || (jsonString.StartsWith('[') && jsonString.EndsWith(']')))
             {
                 var jsonParsed = JsonValue.Parse(jsonString);
                 if (jsonParsed != null)

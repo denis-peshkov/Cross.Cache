@@ -1,8 +1,8 @@
-﻿namespace Cross.Cache.Services;
+﻿namespace Cross.Cache.Providers;
 
-public class CacheInRedisService : ICacheService
+public class CacheInRedisProvider : ICacheProvider
 {
-    private readonly ILogger<CacheInRedisService> _logger;
+    private readonly ILogger<CacheInRedisProvider> _logger;
 
     private const int EXPIRATION_IN_MINUTES = 1440;
 
@@ -12,7 +12,7 @@ public class CacheInRedisService : ICacheService
 
     private readonly int[] _connectionsErrorCount;
 
-    public CacheInRedisService(IOptions<CacheOptions> cacheOptions, ILogger<CacheInRedisService> logger)
+    public CacheInRedisProvider(IOptions<CacheOptions> cacheOptions, ILogger<CacheInRedisProvider> logger)
     {
         CacheOptions = cacheOptions.Value;
         _logger = logger;
@@ -111,7 +111,7 @@ public class CacheInRedisService : ICacheService
 
         return res;
     }
-    
+
     public async Task<T?> GetValueAsync<T>(string key)
     {
         var database = await QueryRedisAsync(Task.FromResult);
