@@ -20,8 +20,14 @@ public class CacheInMemoryProvider : ICacheProvider
             ? Task.FromResult(result)
             : Task.FromResult(string.Empty);
 
-    public Task<T?> GetValueAsync<T>(string key)
-        => throw new NotImplementedException();
+    public async Task<T?> GetValueAsync<T>(string key)
+    {
+        var value = await GetCacheAsync(key);
+        if (string.IsNullOrEmpty(value))
+            return default;
+
+        return JsonSerializer.Deserialize<T>(value);
+    }
 
     public int GetCacheCount()
         => _cacheInMemory.Count;
@@ -41,10 +47,21 @@ public class CacheInMemoryProvider : ICacheProvider
     }
 
     public Task RemoveCachesByPatternAsync(string pattern)
-        => throw new NotImplementedException();
+    {
+        var keys = _cacheInMemory.Keys.Where(k => k.Contains(pattern));
+        foreach (var key in keys)
+        {
+            _cacheInMemory.TryRemove(key, out _);
+        }
+
+        return Task.CompletedTask;
+    }
 
     public Task RemoveKeyCache(string key)
-        => throw new NotImplementedException();
+    {
+        _cacheInMemory.TryRemove(key, out _);
+        return Task.CompletedTask;
+    }
 
     public Task SetCacheAsync(string key, string value)
     {
@@ -61,23 +78,47 @@ public class CacheInMemoryProvider : ICacheProvider
     }
 
     public Task SetCacheAsync(string key, string value, TimeSpan expiry)
-        => throw new NotImplementedException();
+    {
+        // Since this is in-memory implementation, we'll set the value
+        // and create a background task to remove it after expiry
+        if (expiry > TimeSpan.Zero)
+        {
+            _ = Task.Delay(expiry).ContinueWith(_ => _cacheInMemory.TryRemove(key, out var _));
+        }
+
+        return SetCacheAsync(key, value);
+    }
+
+    public Task SetCacheAsync(string key, byte[] value, TimeSpan expiry)
+    {
+        var base64Value = Convert.ToBase64String(value);
+        return SetCacheAsync(key, base64Value, expiry);
+    }
 
     public Task SetCacheAsync(string key, byte[] value)
         => SetCacheAsync(key, value, TimeSpan.Zero);
 
-    public Task SetCacheAsync(string key, byte[] value, TimeSpan expiry)
-        => throw new NotImplementedException();
+    public async Task<byte[]?> GetCacheInBytesAsync(string key)
+    {
+        var value = await GetCacheAsync(key);
+        if (string.IsNullOrEmpty(value))
+            return null;
 
-    public Task<byte[]?> GetCacheInBytesAsync(string key)
-        => throw new NotImplementedException();
+        return Convert.FromBase64String(value);
+    }
 
     public Task<bool> KeyExistsAsync(string key)
-        => throw new NotImplementedException();
+    {
+        return Task.FromResult(_cacheInMemory.ContainsKey(key));
+    }
 
     public Task RemoveCachesByPatternAsync(string pattern, IDatabase? database = null)
-        => throw new NotImplementedException();
+    {
+        throw new NotSupportedException("In-memory cache provider does not support multiple databases");
+    }
 
     public Task<IDatabase> GetDatabase(int dbIndex = -1)
-        => throw new NotImplementedException();
+    {
+        throw new NotSupportedException("In-memory cache provider does not support multiple databases");
+    }
 }

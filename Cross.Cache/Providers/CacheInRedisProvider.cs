@@ -62,6 +62,8 @@ public class CacheInRedisProvider : ICacheProvider
 
     public int GetCacheCount()
     {
+        ArgumentNullException.ThrowIfNull(CacheOptions?.CacheInRedis?.ConnectionString);
+
         if (string.IsNullOrEmpty(CacheOptions?.CacheInRedis?.ConnectionString))
         {
             throw new InvalidOperationException("Property 'CacheOptions.CacheInRedis.ConnectionString' cannot be null or empty.");
@@ -84,21 +86,6 @@ public class CacheInRedisProvider : ICacheProvider
         }
 
         return count;
-    }
-
-    public async Task RemoveCachesByPatternAsync(string pattern, IDatabase? database = null)
-    {
-        if (string.IsNullOrEmpty(pattern))
-        {
-            throw new InvalidOperationException($"Value {nameof(pattern)} cannot be null or empty.");
-        }
-
-        database ??= await QueryRedisAsync(Task.FromResult);
-        var keyList = await GetKeysByPatternAsync(pattern, database);
-
-        var deleteTasks = keyList.Select(key => database.KeyDeleteAsync(key));
-
-        await Task.WhenAll(deleteTasks);
     }
 
     public async Task<string> GetCacheAsync(string key)
@@ -209,6 +196,23 @@ public class CacheInRedisProvider : ICacheProvider
     {
         return await QueryRedisAsync(db => db.KeyExistsAsync(key));
     }
+
+
+    public async Task RemoveCachesByPatternAsync(string pattern, IDatabase? database = null)
+    {
+        if (string.IsNullOrEmpty(pattern))
+        {
+            throw new InvalidOperationException($"Value {nameof(pattern)} cannot be null or empty.");
+        }
+
+        database ??= await QueryRedisAsync(Task.FromResult);
+        var keyList = await GetKeysByPatternAsync(pattern, database);
+
+        var deleteTasks = keyList.Select(key => database.KeyDeleteAsync(key));
+
+        await Task.WhenAll(deleteTasks);
+    }
+
 
     public async Task<IDatabase> GetDatabase(int dbIndex = -1)
     {
