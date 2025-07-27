@@ -2,10 +2,10 @@ namespace Cross.Cache.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCacheService(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddCacheProvider(this IServiceCollection services, IConfiguration configuration)
     {
-        var section = configuration.GetSection(nameof(CacheOptions));
-        services.Configure<CacheOptions>(section);
+        var cacheOptions = configuration.GetSection(nameof(CacheOptions));
+        services.Configure<CacheOptions>(cacheOptions);
 
         var useCache = configuration["CacheOptions:UseCache"];
 
@@ -19,7 +19,7 @@ public static class ServiceCollectionExtensions
                 services.AddStackExchangeRedisCache(
                     options =>
                     {
-                        options.Configuration = section["CacheInRedis:ConnectionString"];
+                        options.Configuration = cacheOptions["CacheInRedis:ConnectionString"];
                         options.ConfigurationOptions = new ConfigurationOptions
                         {
                             AsyncTimeout = 6000,
@@ -30,7 +30,7 @@ public static class ServiceCollectionExtensions
                 break;
 
             default:
-                throw new ApplicationException("Ошибка регистрации модуля кэша: неверная конфигурация.");
+                throw new ApplicationException("Cache module registration error: invalid configuration.");
         }
 
         return services;

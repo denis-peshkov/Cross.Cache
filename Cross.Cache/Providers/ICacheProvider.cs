@@ -28,9 +28,9 @@ public interface ICacheProvider
 
     string BuildCacheKey(string typeName, string key);
 
-    Task RemoveCachesByPatternAsync(string pattern, IDatabase? database = null);
-
     Task<bool> KeyExistsAsync(string key);
+
+    Task RemoveCachesByPatternAsync(string pattern, IDatabase? database = null);
 
     Task<IDatabase> GetDatabase(int dbIndex = -1);
 }
