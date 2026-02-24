@@ -1,4 +1,39 @@
-0.1.0 - 29 Apr 2024
+v0.1.0 - 29 Apr 2024
 Initial version.
 
-Improvements and new name conventions.
+v7.2.0 - 15 May 2024
+- Fix options names.
+
+v7.2.1 - 15 May 2024
+- Disable NuGet pushing for PRs; add explicit NuGet push step.
+- Add options to SetCache (#45, PR).
+
+v7.2.2 - 16 May 2024
+- Maintenance release (internal changes between v7.2.1 and v7.2.2).
+
+v7.2.3 - 16 May 2024
+- Maintenance release (internal changes between v7.2.2 and v7.2.3).
+
+v7.2.4 - 16 May 2024
+- Fix CI pipeline (#46, PR).
+
+v7.2.5 - 16 May 2024
+- Fix CacheOptions initialization (#47, PR).
+
+v7.3.0 - 22 Jun 2024
+- Add CachedRequestService (#48, PR).
+
+v7.3.1 - 21 Apr 2025
+- Add GetValue method for CacheInRedis service (#49, PR).
+- New contributor: @AndriiBaranov.
+
+v7.4.0 - 21 Apr 2025
+- Improvements and new name conventions (#50, PR).
+
+v7.5.0 - 27 Jul 2025
+- Release: improvements and new name conventions (#51, PR).
+
+v8.1.1 - 24 Feb 2026
+- Added multi-targeting for net7.0 and net8.0 with aligned package dependencies.
+- Improved unit test coverage for caching services, in-memory provider and DI registration.
+- Updated build and packaging configuration for better tooling and coverage integration.
