@@ -36,8 +36,10 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
+            7.0.x
             8.0.x
             9.0.x
+            10.0.x
 
 #      # required for run-on ubuntu-latest
 #      - name: Install Mono
