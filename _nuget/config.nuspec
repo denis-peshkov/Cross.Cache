@@ -5,7 +5,7 @@
     <version>0.0.0</version>
     <authors>Denis Peshkov</authors>
     <owners>Denis Peshkov</owners>
-    <copyright>Copyright 2025</copyright>
+    <copyright>Copyright 2026 Denis Peshkov</copyright>
     <license type="expression">MIT</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/denis-peshkov/Cross.Cache</projectUrl>
@@ -13,18 +13,28 @@
     <readme>docs\README.md</readme>
     <icon>icon.png</icon>
     <releaseNotes>
-      Improvements and new name conventions.
+      - Added multi-targeting for net7.0 and net8.0 with aligned package dependencies.
+      - Improved unit test coverage for caching services, in-memory provider and DI registration.
+      - Updated build and packaging configuration for better tooling and coverage integration.
     </releaseNotes>
     <description>A thread-safe .NET caching library supporting both in-memory and Redis providers with TTL support, OpenTelemetry integration, and a simple configuration system for efficient data caching in distributed applications.</description>
-    <tags>NetCore</tags>
+    <tags>cache;redis;memory;netcore;net7;net8</tags>
     <dependencies>
-      <dependency id="Microsoft.Extensions.Caching.StackExchangeRedis" version="7.0.15" />
-      <dependency id="Microsoft.Extensions.Options.ConfigurationExtensions" version="7.0.0" />
-      <dependency id="StackExchange.Redis.MultiplexerPool" version="2.0.1" />
+      <group targetFramework="net7.0">
+        <dependency id="Microsoft.Extensions.Caching.StackExchangeRedis" version="7.0.20" />
+        <dependency id="Microsoft.Extensions.Options.ConfigurationExtensions" version="7.0.0" />
+        <dependency id="StackExchange.Redis.MultiplexerPool" version="2.2.0" />
+      </group>
+      <group targetFramework="net8.0">
+        <dependency id="Microsoft.Extensions.Caching.StackExchangeRedis" version="8.0.24" />
+        <dependency id="Microsoft.Extensions.Options.ConfigurationExtensions" version="8.0.0" />
+        <dependency id="StackExchange.Redis.MultiplexerPool" version="2.2.0" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="..\Cross.Cache\bin\Release\net7.0\Cross.Cache*.* " target="lib\net7.0" />
+    <file src="..\Cross.Cache\bin\Release\net7.0\Cross.Cache*.*" target="lib\net7.0" />
+    <file src="..\Cross.Cache\bin\Release\net8.0\Cross.Cache*.*" target="lib\net8.0" />
     <file src="..\README.md" target="docs\" />
     <file src="..\icon.png" target="" />
   </files>
