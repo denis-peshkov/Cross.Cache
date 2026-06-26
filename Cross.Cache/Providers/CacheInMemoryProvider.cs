@@ -37,7 +37,7 @@ public class CacheInMemoryProvider : ICacheProvider
 
     public string BuildCacheKey(string typeName, string key)
     {
-        //Создаем ключ для cache
+        // Build cache key
         var keyCache = new StringBuilder();
         keyCache.Append(typeName);
         keyCache.Append('/');
@@ -114,7 +114,12 @@ public class CacheInMemoryProvider : ICacheProvider
 
     public Task RemoveCachesByPatternAsync(string pattern, IDatabase? database = null)
     {
-        throw new NotSupportedException("In-memory cache provider does not support multiple databases");
+        if (database is not null)
+        {
+            throw new NotSupportedException("In-memory cache provider does not support multiple databases");
+        }
+
+        return RemoveCachesByPatternAsync(pattern);
     }
 
     public Task<IDatabase> GetDatabase(int dbIndex = -1)

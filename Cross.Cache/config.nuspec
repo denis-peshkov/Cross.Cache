@@ -13,9 +13,7 @@
     <readme>docs\README.md</readme>
     <icon>icon.png</icon>
     <releaseNotes>
-      - Added multi-targeting for net7.0 and net8.0 with aligned package dependencies.
-      - Improved unit test coverage for caching services, in-memory provider and DI registration.
-      - Updated build and packaging configuration for better tooling and coverage integration.
+      - Fix CacheInMemoryProvider.RemoveCachesByPatternAsync(pattern, database) to remove keys when database is null.
     </releaseNotes>
     <description>A thread-safe .NET caching library supporting both in-memory and Redis providers with TTL support, OpenTelemetry integration, and a simple configuration system for efficient data caching in distributed applications.</description>
     <tags>cache;redis;memory;netcore;net7;net8</tags>
@@ -33,8 +31,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\Cross.Cache\bin\Release\net7.0\Cross.Cache*.*" target="lib\net7.0" />
-    <file src="..\Cross.Cache\bin\Release\net8.0\Cross.Cache*.*" target="lib\net8.0" />
+    <file src="bin\Release\net7.0\Cross.Cache*.*" target="lib\net7.0" />
+    <file src="bin\Release\net8.0\Cross.Cache*.*" target="lib\net8.0" />
     <file src="..\README.md" target="docs\" />
     <file src="..\icon.png" target="" />
   </files>

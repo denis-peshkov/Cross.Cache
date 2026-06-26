@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/.github/">
+    <File Path=".github\FUNDING.yml" />
+  </Folder>
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/dotnet.yml" />
+  </Folder>
+  <Folder Name="/assets/">
+    <File Path=".gitignore" />
+    <File Path="GitVersion.yml" />
+    <File Path="icon.png" />
+    <File Path="icon.svg" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+    <File Path="ReleaseNotes.txt" />
+  </Folder>
+  <Project Path="Cross.Cache.Tests/Cross.Cache.Tests.csproj" />
+  <Project Path="Cross.Cache/Cross.Cache.csproj" />
+</Solution>

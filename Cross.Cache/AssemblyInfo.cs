@@ -1,1 +1,1 @@
-﻿[assembly: InternalsVisibleTo("Cross.Cache.UnitTests")]
+﻿[assembly: InternalsVisibleTo("Cross.Cache.Tests")]

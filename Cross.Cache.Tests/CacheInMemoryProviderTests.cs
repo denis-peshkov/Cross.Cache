@@ -1,6 +1,7 @@
-namespace Cross.Cache.UnitTests;
+namespace Cross.Cache.Tests;
 
 [TestFixture]
+[Category(TestCategory.UNIT)]
 public class CacheInMemoryProviderTests
 {
     private CacheInMemoryProvider _provider;
@@ -177,9 +178,25 @@ public class CacheInMemoryProviderTests
     }
 
     [Test]
-    public void RemoveCachesByPatternAsync_WithDatabaseOverload_ShouldThrowNotSupportedException()
+    public async Task RemoveCachesByPatternAsync_ThroughInterface_ShouldRemoveMatchingKeys()
     {
-        Func<Task> act = () => _provider.RemoveCachesByPatternAsync("x", null);
+        ICacheProvider provider = _provider;
+        await provider.SetCacheAsync("users/1/file", "v1");
+        await provider.SetCacheAsync("users/2/file", "v2");
+        await provider.SetCacheAsync("config/1", "c1");
+
+        await provider.RemoveCachesByPatternAsync("users/");
+
+        provider.GetCacheCount().Should().Be(1);
+        (await provider.GetCacheAsync("config/1")).Should().Be("c1");
+        (await provider.GetCacheAsync("users/1/file")).Should().BeEmpty();
+    }
+
+    [Test]
+    public void RemoveCachesByPatternAsync_WithDatabase_ShouldThrowNotSupportedException()
+    {
+        var database = new Mock<IDatabase>().Object;
+        Func<Task> act = () => _provider.RemoveCachesByPatternAsync("x", database);
 
         act.Should().ThrowAsync<NotSupportedException>()
             .WithMessage("In-memory cache provider does not support multiple databases");
