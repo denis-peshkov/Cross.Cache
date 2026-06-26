@@ -37,7 +37,7 @@ public class CacheInMemoryProvider : ICacheProvider
 
     public string BuildCacheKey(string typeName, string key)
     {
-        //Создаем ключ для cache
+        // Build cache key
         var keyCache = new StringBuilder();
         keyCache.Append(typeName);
         keyCache.Append('/');
