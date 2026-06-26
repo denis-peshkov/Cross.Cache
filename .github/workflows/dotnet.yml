@@ -90,7 +90,7 @@ jobs:
         with:
           args: >
             -Dsonar.organization=denis-peshkov
-            -Dsonar.projectKey=Cross.Identity
+            -Dsonar.projectKey=denis-peshkov.Cross.Identity
             -Dsonar.cs.opencover.reportsPaths=TestResults/**/coverage.opencover.xml
             -Dsonar.sources=Cross.Cache/
             -Dsonar.tests=Cross.Cache.Tests/
