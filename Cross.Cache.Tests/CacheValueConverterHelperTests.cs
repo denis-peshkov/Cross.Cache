@@ -1,6 +1,7 @@
-namespace Cross.Cache.UnitTests;
+namespace Cross.Cache.Tests;
 
 [TestFixture]
+[Category(TestCategory.UNIT)]
 public class CacheValueConverterHelperTests
 {
     [Test(Description = "GetConvertedValue should successfully return Dictionary from string")]

@@ -1,4 +1,4 @@
-namespace Cross.Cache.UnitTests;
+namespace Cross.Cache.Tests;
 
 public class SampleTestDto
 {

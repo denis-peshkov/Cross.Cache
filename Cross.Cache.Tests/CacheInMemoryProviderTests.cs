@@ -1,6 +1,7 @@
-namespace Cross.Cache.UnitTests;
+namespace Cross.Cache.Tests;
 
 [TestFixture]
+[Category(TestCategory.UNIT)]
 public class CacheInMemoryProviderTests
 {
     private CacheInMemoryProvider _provider;
