@@ -33,7 +33,10 @@ v7.4.0 - 21 Apr 2025
 v7.5.0 - 27 Jul 2025
 - Release: improvements and new name conventions (#51, PR).
 
-v8.1.1 - 24 Feb 2026
+v7.5.1 - 24 Feb 2026
 - Added multi-targeting for net7.0 and net8.0 with aligned package dependencies.
 - Improved unit test coverage for caching services, in-memory provider and DI registration.
 - Updated build and packaging configuration for better tooling and coverage integration.
+
+v7.5.2 - 25 Jun 2026
+- Fix CacheInMemoryProvider.RemoveCachesByPatternAsync(pattern, database) to remove keys when database is null.
