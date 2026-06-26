@@ -38,5 +38,5 @@ v7.5.1 - 24 Feb 2026
 - Improved unit test coverage for caching services, in-memory provider and DI registration.
 - Updated build and packaging configuration for better tooling and coverage integration.
 
-v7.5.2 - 25 Jun 2026
+v7.6.0 - 25 Jun 2026
 - Fix CacheInMemoryProvider.RemoveCachesByPatternAsync(pattern, database) to remove keys when database is null.
