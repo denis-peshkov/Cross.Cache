@@ -17,11 +17,11 @@ jobs:
   build:
     permissions: # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#defining-access-for-the-github_token-scopes
       contents: write
-      pull-requests: read # required by SonarCloud for PR analysis and decoration
 
     env:
       BUILD_CONFIG: 'Release'
       SOLUTION: 'Cross.Cache.slnx'
+      QUALITY_GATE_WAIT: ${{ github.event_name == 'pull_request' }}
 
     runs-on: ubuntu-22.04 # ubuntu-latest
 
@@ -86,19 +86,21 @@ jobs:
           DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
       - name: SonarQube Scan
-        continue-on-error: true
         uses: sonarsource/sonarcloud-github-action@v5 # Ex: v4.0.0, See the latest version at https://github.com/marketplace/actions/sonarcloud-scan
         with:
           args: >
-            -Dsonar.organization=peshkov
-            -Dsonar.projectKey=Cross.Cache
+            -Dsonar.organization=denis-peshkov
+            -Dsonar.projectKey=Cross.Identity
             -Dsonar.cs.opencover.reportsPaths=TestResults/**/coverage.opencover.xml
             -Dsonar.sources=Cross.Cache/
             -Dsonar.tests=Cross.Cache.Tests/
+            -Dsonar.qualitygate.wait=${{ env.QUALITY_GATE_WAIT }}
             -Dsonar.verbose=true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Update nuspec version
+        uses: denis-peshkov/update-nuspec-action@v1
 
       - name: Nuget Pack
         run: nuget pack Cross.Cache/config.nuspec -Symbols -Version ${{ env.semVer }}
