@@ -2,7 +2,7 @@
 [![GitHub Release Date](https://img.shields.io/github/release-date/denis-peshkov/Cross.Cache?label=released)](https://github.com/denis-peshkov/Cross.Cache/releases)
 [![NuGetVersion](https://img.shields.io/nuget/v/Cross.Cache.svg)](https://nuget.org/packages/Cross.Cache/)
 [![NugetDownloads](https://img.shields.io/nuget/dt/Cross.Cache.svg)](https://nuget.org/packages/Cross.Cache/)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Cross.Cache&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Cross.Cache)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Cross.Cache&metric=coverage&token=9b3c403033db5eb70f9f5e7ea5026bde157ce568)](https://sonarcloud.io/summary/new_code?id=Cross.Cache)
 [![issues](https://img.shields.io/github/issues/denis-peshkov/Cross.Cache)](https://github.com/denis-peshkov/Cross.Cache/issues)
 [![.NET PR](https://github.com/denis-peshkov/Cross.Cache/actions/workflows/dotnet.yml/badge.svg?event=pull_request)](https://github.com/denis-peshkov/Cross.Cache/actions/workflows/dotnet.yml)
 
