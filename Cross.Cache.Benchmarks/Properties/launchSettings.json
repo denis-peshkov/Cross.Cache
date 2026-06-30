@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "ICacheProvider": {
+      "commandName": "Project",
+      "commandLineArgs": "--filter *ICacheProvider*",
+      "environmentVariables": {
+        "CACHE_BENCHMARK_REDIS_CONNECTION": "localhost:5379"
+      }
+    },
+    "All": {
+      "commandName": "Project",
+      "commandLineArgs": "--filter *",
+      "environmentVariables": {
+        "CACHE_BENCHMARK_REDIS_CONNECTION": "localhost:5379"
+      }
+    }
+  }
+}
